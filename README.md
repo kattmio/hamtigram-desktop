@@ -24,6 +24,8 @@ npm run tauri build -- --bundles deb,rpm
 
 For Windows, run `npm run tauri build -- --bundles nsis` from Windows with the Tauri build prerequisites installed. This produces the NSIS `*-setup.exe` installer. GitHub Actions builds `.deb`, `.rpm`, and the Windows setup executable on every push.
 
+To publish a GitHub prerelease named `TEST` with the installers attached, run the **Build desktop packages** workflow manually from the Actions tab. It publishes only after all three platform packages build successfully.
+
 The packages are written to `src-tauri/target/release/bundle/`.
 
 ### Windows requirements
