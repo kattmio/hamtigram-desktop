@@ -1,0 +1,12 @@
+{
+  "name": "hamtigram-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop client for HamtiGram Messenger",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}
