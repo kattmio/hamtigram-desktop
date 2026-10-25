@@ -6,6 +6,11 @@ authors = ["HamtiGram community"]
 edition = "2021"
 rust-version = "1.90"
 
+[package.metadata.tauri-winres]
+FileDescription = "HamtiGram desktop client"
+ProductName = "HamtiGram"
+OriginalFilename = "hamtigram-desktop.exe"
+
 [build-dependencies]
 tauri-build = { version = "2.7", features = [] }
 
