@@ -1,5 +1,8 @@
 # HamtiGram Desktop
 
+> [!NOTE]
+> HamtiGram может быть недоступен в России из-за проблем с доступом к Cloudflare и возможных ограничений со стороны Роскомнадзора. Для использования сервиса в России рекомендуется подключаться через VPN или прокси.
+
 An open source desktop wrapper for the existing HamtiGram Messenger web app. It opens the same service used by the Android client in a resizable native window and uses the Android app icon and dark indigo palette (`#1A1A2E`, accent `#4F46E5`). Sign in with the same account; messages stay on the existing HamtiGram service.
 
 The Android folder supplied with this project is a decompiled APK resource dump rather than Android source code. Its `website_url`, app name, icon, and colors identify the app as a WebView client of the same site, so this desktop client keeps that behavior instead of inventing a separate messaging backend.
