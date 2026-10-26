@@ -1,4 +1,4 @@
-name: Build desktop packages
+name: Сборка настольного клиента HamtiGram
 
 on:
   push:
@@ -19,20 +19,20 @@ jobs:
         with:
           node-version: 22
       - uses: dtolnay/rust-toolchain@stable
-      - name: Install Tauri Linux dependencies
+      - name: Установить системные зависимости Tauri для Linux
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential curl wget file rpm libxdo-dev libssl-dev librsvg2-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev
       - run: npm ci
-      - name: Build .deb and .rpm packages
+      - name: Собрать пакеты .deb и .rpm
         run: npm run tauri build -- --bundles deb,rpm
-      - name: Confirm Linux packages were generated
+      - name: Проверить, что пакеты Linux созданы
         run: |
           find src-tauri/target/release/bundle -maxdepth 3 -type f -print
           test "$(find src-tauri/target/release/bundle -type f \( -name '*.deb' -o -name '*.rpm' \) | wc -l)" -gt 0
       - uses: actions/upload-artifact@v4
         with:
-          name: hamtigram-linux
+          name: Установщики HamtiGram — Linux
           path: |
             src-tauri/target/release/bundle/deb/*.deb
             src-tauri/target/release/bundle/rpm/*.rpm
@@ -49,11 +49,11 @@ jobs:
           node-version: 22
       - uses: dtolnay/rust-toolchain@stable
       - run: npm ci
-      - name: Build Windows setup executable
+      - name: Собрать установщик Windows
         run: npm run tauri build -- --bundles nsis
       - uses: actions/upload-artifact@v4
         with:
-          name: hamtigram-windows
+          name: Установщики HamtiGram — Windows
           path: src-tauri/target/release/bundle/nsis/*.exe
           if-no-files-found: error
 
@@ -66,15 +66,16 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: hamtigram-*
+          pattern: Установщики HamtiGram — *
           path: release-assets
           merge-multiple: true
-      - name: Publish TEST prerelease
+      - name: Опубликовать предварительный выпуск TEST
         uses: softprops/action-gh-release@v2
         with:
           tag_name: TEST
           target_commitish: main
           name: TEST
           prerelease: true
-          generate_release_notes: true
+          body: "Тестовый предварительный выпуск HamtiGram для проверки установщиков. Это не стабильный выпуск."
+          generate_release_notes: false
           files: release-assets/**

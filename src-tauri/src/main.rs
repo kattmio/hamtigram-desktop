@@ -3,5 +3,5 @@
 fn main() {
     tauri::Builder::default()
         .run(tauri::generate_context!())
-        .expect("failed to run HamtiGram Desktop");
+        .expect("Не удалось запустить настольный клиент HamtiGram");
 }

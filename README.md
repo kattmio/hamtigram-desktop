@@ -1,40 +1,51 @@
-# HamtiGram Desktop
+# HamtiGram для компьютера
 
 > [!NOTE]
-> HamtiGram может быть недоступен в России из-за проблем с доступом к Cloudflare и возможных ограничений со стороны Роскомнадзора. Для использования сервиса в России рекомендуется подключаться через VPN или прокси.
+> В России HamtiGram может быть недоступен из-за проблем с доступом к Cloudflare и возможных ограничений со стороны Роскомнадзора. Для использования сервиса в России рекомендуется подключаться через VPN или прокси.
 
-An open source desktop wrapper for the existing HamtiGram Messenger web app. It opens the same service used by the Android client in a resizable native window and uses the Android app icon and dark indigo palette (`#1A1A2E`, accent `#4F46E5`). Sign in with the same account; messages stay on the existing HamtiGram service.
+![Скриншот HamtiGram для компьютера](screenshots/hamtigram-desktop.png)
 
-The Android folder supplied with this project is a decompiled APK resource dump rather than Android source code. Its `website_url`, app name, icon, and colors identify the app as a WebView client of the same site, so this desktop client keeps that behavior instead of inventing a separate messaging backend.
+Открытый настольный клиент мессенджера HamtiGram для Windows и Linux. Он показывает тот же веб-мессенджер, что и мобильный клиент, в отдельном изменяемом окне. Войдите в свою обычную учётную запись: сообщения и переписки обслуживаются существующим сервисом HamtiGram.
 
-## Requirements
+Android-клиент предоставлен в виде распакованного ресурсного дампа APK, а не исходного проекта. По адресу сайта, названию, значку и цветам видно, что он открывает тот же веб-мессенджер. Поэтому настольный клиент также подключается к веб-сервису и не добавляет отдельный сервер переписки.
 
-- Rust and the platform prerequisites for [Tauri 2](https://v2.tauri.app/start/prerequisites/)
-- Node.js and npm
+## Требования
 
-## Run
+- Windows 10 или новее; установщик включает автономный установщик WebView2.
+- Linux с WebKitGTK 4.1 для запуска собранного приложения.
+- Rust и системные зависимости Tauri 2, Node.js и npm — для разработки и сборки.
+
+Инструкции по установке инструментов сборки и системных зависимостей: [руководство Tauri](https://v2.tauri.app/start/prerequisites/).
+
+## Запуск для разработки
 
 ```sh
 npm install
 npm run tauri dev
 ```
 
-## Build packages
+## Сборка установщиков
+
+Собрать пакеты Linux `.deb` и `.rpm`:
 
 ```sh
 npm run tauri build -- --bundles deb,rpm
 ```
 
-For Windows, run `npm run tauri build -- --bundles nsis` from Windows with the Tauri build prerequisites installed. This produces the NSIS `*-setup.exe` installer. GitHub Actions builds `.deb`, `.rpm`, and the Windows setup executable on every push.
+Собрать установщик Windows `*-setup.exe`:
 
-To publish a GitHub prerelease named `TEST` with the installers attached, run the **Build desktop packages** workflow manually from the Actions tab. It publishes only after all three platform packages build successfully.
+```sh
+npm run tauri build -- --bundles nsis
+```
 
-The packages are written to `src-tauri/target/release/bundle/`.
+Файлы сборки появятся в `src-tauri/target/release/bundle/`. Установщик Windows проверяет, что установлена Windows 10 или новее, и включает автономный установщик WebView2. Это увеличивает размер установщика примерно на 127 МБ.
 
-### Windows requirements
+## Сборки и тестовый выпуск
 
-The setup file checks for Windows 10 build 10240 or newer and bundles Microsoft's offline WebView2 installer, so installation does not need to download the runtime. Tauri documents this bundle as adding about 127 MB to the installer. Windows 10 (April 2018 / version 1803) and later already include WebView2, so the bundled installer can skip installation when the runtime is present.
+GitHub Actions автоматически собирает установщики Windows и Linux при каждом обновлении ветки `main`. Чтобы опубликовать установщики как предварительный выпуск `TEST`, откройте раздел **Actions**, выберите workflow **Сборка настольного клиента HamtiGram** и нажмите **Run workflow** («Запустить workflow»).
 
-## Publish
+До отдельного объявления разработчика публикуется только предварительный выпуск `TEST`; стабильный выпуск не создаётся.
 
-This folder is intended to become a public GitHub repository. After creating a public repository under your GitHub account, push this folder's Git history to it. The build is a desktop shell around the hosted HamtiGram site, so it needs an internet connection to load chats and sign in.
+## Лицензия
+
+Проект распространяется по лицензии MIT. В файле [LICENSE](LICENSE) сохранён стандартный текст лицензии на английском языке.
