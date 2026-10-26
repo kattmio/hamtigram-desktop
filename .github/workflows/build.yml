@@ -26,10 +26,16 @@ jobs:
       - run: npm ci
       - name: Build .deb and .rpm packages
         run: npm run tauri build -- --bundles deb,rpm
+      - name: Confirm Linux packages were generated
+        run: |
+          find src-tauri/target/release/bundle -maxdepth 3 -type f -print
+          test "$(find src-tauri/target/release/bundle -type f \( -name '*.deb' -o -name '*.rpm' \) | wc -l)" -gt 0
       - uses: actions/upload-artifact@v4
         with:
           name: hamtigram-linux
-          path: src-tauri/target/release/bundle/**/*.{deb,rpm}
+          path: |
+            src-tauri/target/release/bundle/deb/*.deb
+            src-tauri/target/release/bundle/rpm/*.rpm
           if-no-files-found: error
 
   windows:
