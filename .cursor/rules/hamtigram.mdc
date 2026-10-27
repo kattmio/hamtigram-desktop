@@ -1,0 +1,6 @@
+---
+description: Shared project conventions for the HamtiGram desktop client
+alwaysApply: true
+---
+
+Follow the repository guidance in `AGENTS.md` for architecture, product behavior, development commands, and change constraints.

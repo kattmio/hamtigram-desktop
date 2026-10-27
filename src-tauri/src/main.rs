@@ -2,6 +2,7 @@
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_notification::init())
         .run(tauri::generate_context!())
         .expect("Не удалось запустить настольный клиент HamtiGram");
 }
